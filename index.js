@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 require('dotenv').config();
+const cors = require('cors');
 const port = process.env.port || 5000;
 
 
@@ -10,6 +11,8 @@ const port = process.env.port || 5000;
 // Connect MongoBD
 const connectMongoDB = require('./Models/db');
 connectMongoDB()
+
+app.use(cors())
 
 app.get('/', (req, res) => {
     res.send("Shop Sphere server is running ...")
