@@ -29,8 +29,8 @@
 ## Clone and Run Local
 -  first clone client
 -  Install --> express jsonwebtoken  body-parser dotenv mongoose joi cors
--  Configure env file
- 
+
+## Configure env file
   PORT=5000 <br>
   DB_User= Your MongoDB User  <br>
   DB_Password= Your MongoDB Password <br>
