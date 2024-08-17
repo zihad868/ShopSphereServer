@@ -27,7 +27,7 @@ const addProduct = async(req, res) => {
 
 // Add Products
 const addProducts = async (req, res) => {
-    const products = req.body; // Expecting an array of products
+    const products = req.body; 
 
     try {
         const newProducts = await Product.insertMany(products);
@@ -40,32 +40,32 @@ const addProducts = async (req, res) => {
 
 const getProducts = async (req, res) => {
     const { sortBy, search, brand, category, priceMin, priceMax, page = 1, limit = 10 } = req.query;
-    let sortOptions = { _id: -1 }; // Default to descending order by _id (most recent first)
+    let sortOptions = { _id: -1 };
     let searchQuery = {};
 
-    // Apply sort options for price sorting if provided
+    
     if (sortBy === 'priceLowToHigh') {
-        sortOptions = { price: 1 }; // Price ascending order
+        sortOptions = { price: 1 }; 
     } else if (sortBy === 'priceHighToLow') {
-        sortOptions = { price: -1 }; // Price descending order
+        sortOptions = { price: -1 }; 
     }
 
-    // Apply search filter if search query is provided
+    
     if (search) {
-        searchQuery.name = { $regex: search, $options: 'i' }; // Case-insensitive search
+        searchQuery.name = { $regex: search, $options: 'i' }; 
     }
 
-    // Apply brand filter if brand is provided
+   
     if (brand) {
         searchQuery.brand = brand;
     }
 
-    // Apply category filter if category is provided
+    
     if (category) {
         searchQuery.category = category;
     }
 
-    // Apply price range filter if priceMin and priceMax are provided
+    
     if (priceMin !== undefined && priceMax !== undefined) {
         searchQuery.price = { $gte: priceMin, $lte: priceMax };
     }
@@ -73,10 +73,10 @@ const getProducts = async (req, res) => {
     try {
         const products = await Product.find(searchQuery)
             .sort(sortOptions)
-            .skip((page - 1) * limit) // Skip the products for the previous pages
-            .limit(parseInt(limit)); // Limit the number of products per page
+            .skip((page - 1) * limit) 
+            .limit(parseInt(limit)); 
 
-        const totalProducts = await Product.countDocuments(searchQuery); // Get total number of products
+        const totalProducts = await Product.countDocuments(searchQuery); 
 
         res.status(200).json({
             products,
