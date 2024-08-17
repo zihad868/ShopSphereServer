@@ -1,5 +1,7 @@
 const Product = require('../Models/ProdectModels');
 
+
+// Add Single Product
 const addProduct = async(req, res) => {
     const { name, image, description, price, category, brand, rating } = req.body;
     
@@ -23,7 +25,7 @@ const addProduct = async(req, res) => {
     }
 }
 
-
+// Add Products
 const addProducts = async (req, res) => {
     const products = req.body; // Expecting an array of products
 
@@ -35,9 +37,18 @@ const addProducts = async (req, res) => {
     }
 };
 
-
+// Get all products
+const getProducts = async(req, res) => {
+    try {
+        const products = await Product.find().sort({_id: -1});
+        res.status(200).json(products);
+      } catch (error) {
+        res.status(500).json({ message: 'Server Error', error });
+      }
+}
 
 module.exports = {
     addProduct,
-    addProducts
+    addProducts,
+    getProducts
 }
