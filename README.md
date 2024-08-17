@@ -32,8 +32,8 @@
 -  Configure env file
  
   PORT=5000 <br>
-  DB_User= Your MongoDB User 
-  DB_Password= Your MongoDB Password
+  DB_User= Your MongoDB User  <br>
+  DB_Password= Your MongoDB Password <br>
 
 # React + Vite
 
