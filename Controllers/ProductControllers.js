@@ -39,24 +39,28 @@ const addProducts = async (req, res) => {
 
 // Get all products
 const getProducts = async (req, res) => {
-    const { sortBy } = req.query;
+    const { sortBy, search } = req.query;
     let sortOptions = {};
+    let searchQuery = {};
 
     if (sortBy === 'priceLowToHigh') {
-        sortOptions = { price: 1 }; // 1 for ascending order
+        sortOptions = { price: 1 }; // Ascending order
     } else if (sortBy === 'priceHighToLow') {
-        sortOptions = { price: -1 }; // -1 for descending order
-    }else{
-        sortOptions = { _id: -1 }
+        sortOptions = { price: -1 }; // Descending order
+    }
+
+    if (search) {
+        searchQuery = { name: { $regex: search, $options: 'i' } }; // Case-insensitive search
     }
 
     try {
-        const products = await Product.find().sort(sortOptions);
+        const products = await Product.find(searchQuery).sort(sortOptions);
         res.status(200).json(products);
     } catch (error) {
         res.status(500).json({ message: 'Server Error', error });
     }
 };
+
 
 
 module.exports = {
