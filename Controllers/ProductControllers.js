@@ -9,7 +9,10 @@ const addProduct = async(req, res) => {
         });
 
         await newProduct.save();
-        res.status(201).json(newProduct)
+        res.status(201).json({
+            message: 'Product Add Successful',
+            success: true
+        })
     }
     catch(error){
         res.status(500).json({message: error.message})
