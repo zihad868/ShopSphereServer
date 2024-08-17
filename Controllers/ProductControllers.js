@@ -38,14 +38,26 @@ const addProducts = async (req, res) => {
 };
 
 // Get all products
-const getProducts = async(req, res) => {
+const getProducts = async (req, res) => {
+    const { sortBy } = req.query;
+    let sortOptions = {};
+
+    if (sortBy === 'priceLowToHigh') {
+        sortOptions = { price: 1 }; // 1 for ascending order
+    } else if (sortBy === 'priceHighToLow') {
+        sortOptions = { price: -1 }; // -1 for descending order
+    }else{
+        sortOptions = { _id: -1 }
+    }
+
     try {
-        const products = await Product.find().sort({_id: -1});
+        const products = await Product.find().sort(sortOptions);
         res.status(200).json(products);
-      } catch (error) {
+    } catch (error) {
         res.status(500).json({ message: 'Server Error', error });
-      }
-}
+    }
+};
+
 
 module.exports = {
     addProduct,
